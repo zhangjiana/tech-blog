@@ -27,11 +27,21 @@ pnpm start
 ### 方式一：使用构建脚本（推荐）
 
 ```bash
-# 构建 Docker 镜像
+# 构建 Docker 镜像（本地单架构）
 ./build-docker.sh
 
 # 运行容器
 docker run -p 3000:3000 tech-blog:latest
+```
+
+### 方式一.1：构建多架构镜像（生产环境推荐）
+
+```bash
+# 登录Docker Hub
+docker login
+
+# 构建并推送多架构镜像（支持 linux/amd64, linux/arm64）
+./build-multiarch.sh
 ```
 
 ### 方式二：使用 Docker Compose
@@ -127,12 +137,26 @@ cd tech-blog
 ./deploy.sh
 ```
 
-### 方式二：使用 Vercel（推荐）
+### 方式二：使用 Docker Hub
+
+```bash
+# 推送到Docker Hub（多架构）
+docker login
+./build-multiarch.sh
+
+# 在服务器上直接运行
+docker run -d -p 3000:3000 --name tech-blog youhebukeer/tech-blog:latest
+
+# 或者使用生产环境compose文件
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+### 方式三：使用 Vercel（推荐）
 
 1. 连接 GitHub 仓库到 Vercel
 2. 自动部署，无需额外配置
 
-### 方式三：使用 Nginx + Docker
+### 方式四：使用 Nginx + Docker
 
 ```bash
 # 启动博客服务
@@ -186,6 +210,35 @@ pnpm type-check
 
 # 代码格式化
 pnpm format
+```
+
+## 🏗️ 多架构构建说明
+
+### 构建支持 Linux 服务器的镜像
+
+由于本地是 ARM 架构（Apple Silicon），构建的镜像无法在 Linux AMD64 服务器上运行。使用多架构构建解决此问题：
+
+```bash
+# 1. 登录 Docker Hub
+docker login
+
+# 2. 构建多架构镜像并推送
+./build-multiarch.sh
+```
+
+### 支持的架构
+
+- **linux/amd64**: Intel/AMD 64位处理器（大多数Linux服务器）
+- **linux/arm64**: ARM 64位处理器（Apple Silicon, ARM服务器）
+
+### 验证多架构镜像
+
+```bash
+# 查看镜像支持的架构
+docker manifest inspect youhebukeer/tech-blog:latest
+
+# 在Linux服务器上拉取镜像（会自动选择合适的架构）
+docker pull youhebukeer/tech-blog:latest
 ```
 
 ## 🐛 故障排除
