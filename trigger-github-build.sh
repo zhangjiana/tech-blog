@@ -21,8 +21,8 @@ if ! git diff-index --quiet HEAD --; then
     fi
 fi
 
-# 创建一个构建触发标签
-BUILD_TAG="build-$(date +%Y%m%d-%H%M%S)"
+# 创建一个构建触发标签（使用v前缀以匹配GitHub Actions触发条件）
+BUILD_TAG="v1.0.$(date +%Y%m%d%H%M%S)"
 echo "🏷️  创建构建标签: $BUILD_TAG"
 
 git tag -a "$BUILD_TAG" -m "Trigger multi-architecture build for AMD64"
