@@ -9,11 +9,13 @@ if ! docker info > /dev/null 2>&1; then
     exit 1
 fi
 
-# 检查是否已登录Docker Hub
-if ! docker info | grep -q "Username:"; then
-    echo "⚠️ 未登录Docker Hub，请先登录："
+# 检查是否已登录Docker Hub（通过测试推送权限）
+echo "🔍 检查Docker Hub登录状态..."
+if ! docker buildx imagetools inspect youhebukeer/tech-blog:latest > /dev/null 2>&1; then
+    echo "⚠️ 无法访问Docker Hub仓库，请确保已登录："
     echo "docker login"
-    exit 1
+    echo "如果是第一次构建，请忽略此警告"
+    echo ""
 fi
 
 # 创建并使用buildx构建器

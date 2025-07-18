@@ -270,6 +270,39 @@ docker pull youhebukeer/tech-blog:latest
    docker-compose build --no-cache
    ```
 
+### 多架构构建问题（Apple Silicon）
+
+**问题**：Rosetta 模拟错误，无法构建 AMD64 架构
+
+**解决方案**：
+
+#### 方案一：启用 Docker Desktop Rosetta 支持
+1. 打开 Docker Desktop
+2. 进入 Settings → General
+3. 勾选 "Use Rosetta for x86_64/amd64 emulation on Apple Silicon"
+4. 重启 Docker Desktop
+5. 再次运行 `./build-multiarch.sh`
+
+#### 方案二：使用 GitHub Actions 云端构建（推荐）
+1. 在 GitHub 仓库中设置 Secrets：
+   - `DOCKER_USERNAME`: Docker Hub 用户名
+   - `DOCKER_PASSWORD`: Docker Hub 密码或 Access Token
+2. 推送代码到 GitHub，自动触发构建
+3. 在 Actions 页面查看构建状态
+
+#### 方案三：仅构建 ARM64 架构
+```bash
+# 构建仅支持 ARM64 架构的镜像
+./build-arm64.sh
+```
+
+#### 方案四：使用预构建镜像
+```bash
+# 直接使用已构建的多架构镜像
+docker pull youhebukeer/tech-blog:latest
+docker run -d -p 3000:3000 youhebukeer/tech-blog:latest
+```
+
 ## 📄 许可证
 
 MIT License
