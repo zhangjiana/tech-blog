@@ -15,7 +15,7 @@ export default function Home() {
       <section className="mb-12">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            前端架构师的技术分享
+            羽灵的技术分享 专注技术分享
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             基于9年大型ToB项目经验，深度分享前端架构设计、工程实践与技术洞察

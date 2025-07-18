@@ -1,36 +1,232 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 技术博客系统
 
-## Getting Started
+一个基于 Next.js + TailwindCSS + MDX 构建的专业技术博客系统，专注于前端架构和工程实践分享。
 
-First, run the development server:
+## 🚀 快速开始
+
+### 本地开发
 
 ```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# 构建项目
+npm run build
+
+# 启动生产服务器
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+访问 [http://localhost:3000](http://localhost:3000) 查看博客。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🐳 Docker 部署
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 方式一：使用构建脚本（推荐）
 
-## Learn More
+```bash
+# 构建 Docker 镜像
+./build-docker.sh
 
-To learn more about Next.js, take a look at the following resources:
+# 运行容器
+docker run -p 3000:3000 tech-blog:latest
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 方式二：使用 Docker Compose
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# 构建并启动服务
+docker-compose up -d
 
-## Deploy on Vercel
+# 查看运行状态
+docker-compose ps
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# 查看日志
+docker-compose logs -f tech-blog
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# 停止服务
+docker-compose down
+```
+
+### 方式三：使用部署脚本
+
+```bash
+# 一键部署（包含构建、启动、健康检查）
+./deploy.sh
+```
+
+## 🔧 技术栈
+
+- **框架**: Next.js 15.4.1
+- **样式**: TailwindCSS v4
+- **内容**: MDX (Markdown + React)
+- **语法高亮**: rehype-highlight
+- **Markdown 增强**: remark-gfm
+- **字体**: Geist Sans & Geist Mono
+
+## 📁 项目结构
+
+```
+├── src/
+│   ├── app/                 # Next.js App Router
+│   │   ├── blog/           # 博客相关页面
+│   │   ├── about/          # 关于页面
+│   │   └── layout.tsx      # 全局布局
+│   ├── components/         # React 组件
+│   ├── content/posts/      # Markdown 文章
+│   ├── lib/               # 工具函数
+│   └── types/             # TypeScript 类型定义
+├── public/                # 静态资源
+├── Dockerfile             # Docker 镜像配置
+├── docker-compose.yml     # Docker Compose 配置
+├── build-docker.sh        # Docker 构建脚本
+└── deploy.sh              # 部署脚本
+```
+
+## 📝 内容管理
+
+### 添加新文章
+
+1. 在 `src/content/posts/` 目录下创建新的 `.md` 文件
+2. 添加必要的 frontmatter：
+
+```markdown
+---
+title: "文章标题"
+description: "文章描述"
+publishedAt: "2024-01-01"
+category: "分类名称"
+tags: ["标签1", "标签2"]
+featured: true
+---
+
+# 文章内容
+```
+
+### 支持的分类
+
+- React
+- Vue
+- 微前端
+- 工程化
+- 监控系统
+- 性能优化
+
+## 🌐 部署到生产环境
+
+### 方式一：使用 Docker
+
+```bash
+# 在服务器上克隆项目
+git clone https://github.com/zhangjiana/tech-blog.git
+cd tech-blog
+
+# 使用部署脚本
+./deploy.sh
+```
+
+### 方式二：使用 Vercel（推荐）
+
+1. 连接 GitHub 仓库到 Vercel
+2. 自动部署，无需额外配置
+
+### 方式三：使用 Nginx + Docker
+
+```bash
+# 启动博客服务
+docker-compose up -d
+
+# 配置 Nginx 反向代理
+server {
+    listen 80;
+    server_name yourdomain.com;
+    
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+## 🔍 SEO 优化
+
+- ✅ 完整的 meta 标签配置
+- ✅ OpenGraph 社交分享优化
+- ✅ JSON-LD 结构化数据
+- ✅ 自动生成 sitemap
+- ✅ 语义化 HTML 结构
+- ✅ 移动端响应式设计
+
+## 📊 性能特性
+
+- ✅ 静态生成 (SSG)
+- ✅ 图片优化
+- ✅ 代码分割
+- ✅ 懒加载
+- ✅ 压缩优化
+- ✅ CDN 友好
+
+## 🛠️ 开发命令
+
+```bash
+# 开发模式
+npm run dev
+
+# 构建项目
+npm run build
+
+# 启动生产服务器
+npm start
+
+# 类型检查
+npm run type-check
+
+# 代码格式化
+npm run format
+```
+
+## 🐛 故障排除
+
+### Docker 相关问题
+
+1. **Docker daemon 未运行**
+   ```bash
+   # macOS: 启动 Docker Desktop
+   # Linux: 启动 Docker 服务
+   sudo systemctl start docker
+   ```
+
+2. **端口占用**
+   ```bash
+   # 查看端口占用
+   lsof -i :3000
+   
+   # 修改端口
+   docker run -p 8080:3000 tech-blog:latest
+   ```
+
+3. **构建失败**
+   ```bash
+   # 清理 Docker 缓存
+   docker builder prune
+   
+   # 重新构建
+   docker-compose build --no-cache
+   ```
+
+## 📄 许可证
+
+MIT License
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+---
+
+**作者**: 张建 - 前端架构师  
+**邮箱**: zhangjian_9253@163.com  
+**博客**: https://zhangjiana.github.io/

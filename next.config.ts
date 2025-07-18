@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   experimental: {
     mdxRs: true,
   },
+  output: 'standalone',
 };
 
 const withMDX = createMDX({
