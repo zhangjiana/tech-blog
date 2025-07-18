@@ -10,7 +10,7 @@ if ! docker info > /dev/null 2>&1; then
 fi
 
 # 构建镜像
-echo "📦 构建 Docker 镜像..."
+echo "📦 构建 Docker 镜像（使用 pnpm）..."
 docker build -t tech-blog:latest .
 
 if [ $? -eq 0 ]; then

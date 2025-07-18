@@ -8,16 +8,16 @@
 
 ```bash
 # 安装依赖
-npm install
+pnpm install
 
 # 启动开发服务器
-npm run dev
+pnpm dev
 
 # 构建项目
-npm run build
+pnpm build
 
 # 启动生产服务器
-npm start
+pnpm start
 ```
 
 访问 [http://localhost:3000](http://localhost:3000) 查看博客。
@@ -173,19 +173,19 @@ server {
 
 ```bash
 # 开发模式
-npm run dev
+pnpm dev
 
 # 构建项目
-npm run build
+pnpm build
 
 # 启动生产服务器
-npm start
+pnpm start
 
 # 类型检查
-npm run type-check
+pnpm type-check
 
 # 代码格式化
-npm run format
+pnpm format
 ```
 
 ## 🐛 故障排除

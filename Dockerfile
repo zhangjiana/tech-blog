@@ -1,14 +1,17 @@
 # 使用官方Node.js 18镜像作为基础镜像
 FROM node:18-alpine AS base
 
+# 安装pnpm
+RUN npm install -g pnpm
+
 # 安装依赖阶段
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# 复制package文件
-COPY package.json package-lock.json* ./
-RUN npm ci --only=production
+# 复制pnpm配置文件
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm install --frozen-lockfile
 
 # 构建阶段
 FROM base AS builder
@@ -20,7 +23,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # 构建应用
-RUN npm run build
+RUN pnpm build
 
 # 运行阶段
 FROM base AS runner
